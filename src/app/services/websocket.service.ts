@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { Observable } from 'rxjs';
+interface Usuario {
+  nombre: string;
+}
 @Injectable({
   providedIn: 'root',
 })
 export class WebsocketService {
   public socketStatus: boolean = false;
+  public usuario!: Usuario;
   constructor(private _socket: Socket) {
     this.checkStatus();
   }
@@ -24,5 +28,14 @@ export class WebsocketService {
   }
   public listen(evento: string): Observable<any> {
     return this._socket.fromEvent(evento);
+  }
+  public login(nombre: string) {
+    console.log('configurando', nombre);
+    this.emit('configurar-usuario', { nombre }, (response: any) => {
+      console.log(response);
+    });
+    // this._socket.emit('configurar-usuario', { nombre }, (response: any) => {
+    //   console.log(response);
+    // });
   }
 }
