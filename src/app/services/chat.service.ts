@@ -20,4 +20,10 @@ export class ChatService {
   public getMessagesPrivate(): Observable<any> {
     return this.websocketService.listen('mensaje-privado');
   }
+  public getUsuariosActivos(): Observable<any> {
+    return this.websocketService.listen('usuarios-activos');
+  }
+  public emitirUsuariosActivos(): void {
+    this.websocketService.emit('obtener-usuarios');
+  }
 }
